@@ -1,0 +1,7 @@
+{
+    "number": "XYZ001INV002",
+    "date": "2010-08-10",
+    "period": { "from": "2010-07-12", "to": "2010-08-10" },
+    "total": 6789,
+    "bankTransactionDate": "2010-05-12"
+}

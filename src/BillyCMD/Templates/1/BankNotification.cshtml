@@ -1,0 +1,96 @@
+﻿@using System.Globalization
+@using BillyCMD.Data
+@model InvoiceModel
+
+@*@{*@
+@*    var Model = new InvoiceModel();*@
+@*}*@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Письмо в банк @Model.Invoice.Number</title>
+  <style type="text/css">
+    body {
+      font-family: Cambria;
+      font-size: 11pt;
+    }
+
+    table {
+      width: 100%;
+      border: 0; /* border="0" */
+      border-collapse: collapse; /* cellspacing="0" */
+    }
+
+      table td {
+        padding: 0px; /* cellpadding="0" */
+      }
+
+    h1 {
+      border: 1pt solid black;
+      text-align: center;
+      font-size: 14pt;
+    }
+
+    .doc-column {
+      width: 50%;
+      padding: 10pt;
+      vertical-align: top;
+    }
+
+    .sheet {
+      border: 1pt solid black;
+    }
+
+      .sheet th, .sheet td {
+        padding: 5pt;
+        border: 1px solid black;
+      }
+
+      .sheet td {
+        vertical-align: top;
+        font-size: 11pt;
+      }
+  </style>
+</head>
+<body>
+
+  <table>
+    <tr>
+      <td class="doc-column">
+        &nbsp;
+      </td>
+      <td class="doc-column">
+        Начальнику Святошинського відділення №234<br/>
+        &lt;- full banking company name etc -&gt;<br/>
+        Коваленко Дмитро Васильовичу<br />
+        ФОП Петренко Петра Петровича<br />
+        р/р в доларах США 123123123123<br />
+      </td>
+    </tr>
+  </table>
+  <h3 style="text-align: center">ЗАЯВА</h3>
+  <p>
+    @Model.Invoice.BankTransactionDate.ToLongDateForUa() комания Happy Company LTD (&lt;-address and bank details -&gt;) здійснила
+    платіж на суму @Model.Invoice.Total.AsUSDForUa() на валютний рахунок ФОП 123123123123. Призначення платежу:
+    "Оплата послуг в сфері розробки програмного забезпечення по інвойсу @Model.Invoice.Number до контракту
+    @Model.Contract.Number від @Model.Contract.Date.ToLongDateForUa() згідно акту виконаних робіт".
+    Оригінальний текст призначення платежу в SWIFT-повідомленні: "Invoice @Model.Invoice.Number for the contract @Model.Contract.Number". Копії акта виконаних робіт та рахунку-фактури додаються.
+  </p>
+  <table>
+    <tr>
+      <td class="doc-column">
+        Петренко Петро Петрович
+      </td>
+      <td class="doc-column">
+        @Model.Invoice.BankTransactionDate.ToLongDateForUa()
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

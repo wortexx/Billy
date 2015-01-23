@@ -1,0 +1,280 @@
+﻿@using System.Globalization
+@using BillyCMD.Data
+@model InvoiceModel
+
+@*@{*@
+@*     var Model = new InvoiceModel();*@
+@*}*@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Act @Model.Invoice.Number for contract @Model.Contract.Number</title>
+    <style type="text/css">
+        body {
+            font-family: Cambria;
+            font-size: 11pt;
+        }
+
+        table {
+            width: 100%;
+            border: 0; /* border="0" */
+            border-collapse: collapse; /* cellspacing="0" */
+        }
+
+            table td {
+                padding: 0px; /* cellpadding="0" */
+            }
+
+        h1 {
+            /* border: 1pt solid black; */
+            text-align: center;
+            font-size: 14pt;
+        }
+
+
+        h4 {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        .doc-column {
+            width: 50%;
+            padding: 10pt;
+            vertical-align: top;
+        }
+
+        .sheet {
+            border: 1pt solid black;
+        }
+
+            .sheet th, .sheet td {
+                padding: 5pt;
+                border: 1px solid black;
+            }
+
+            .sheet td {
+                vertical-align: top;
+                font-size: 11pt;
+            }
+
+        .page-break {
+            page-break-after: always;
+        }
+    </style>
+</head>
+<body>
+
+    <table>
+        <tr>
+            <td class="doc-column">
+                <h1>
+                    Акт про надання послуг<br />
+                    № @Model.Invoice.Number<br />
+                    до контракту № @Model.Contract.Number<br />
+                    від @Model.Contract.Date.ToLongDateForUa()<br />
+                </h1>
+                <p style="text-align: center">
+                    @Model.Invoice.Date.ToShortDateForUa()
+                </p>
+            </td>
+            <td class="doc-column">
+                <h1>
+                    Taking-over Act <br />
+                    # @Model.Invoice.Number <br />
+                    under Contract # @Model.Contract.Number<br />
+                    dated @Model.Contract.Date.ToLongDateForEn()<br />
+                </h1>
+                <p style="text-align: center">
+                    @Model.Invoice.Date.ToShortDateForEn()
+                </p>
+            </td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td class="doc-column">
+                <h4>Компанія (“Покупець”)</h4><br />
+                <strong>ТзОВ "Щасливий Клієнт"</strong><br />
+                &lt;- EN address, bank details, contact name -&gt;
+            </td>
+            <td class="doc-column">
+                <h4>The Company (the “Buyer”)</h4><br />
+                <strong>Happy Company LTD</strong><br />
+                &lt;-UA address, bank details, contact name -&gt;
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td class="doc-column">
+                <h4>Компанія, що уклала контракт з вищеназваною (“Постачальник послуг”)</h4>
+                <strong>ФОП Петренко Петро Петрович</strong><br />
+                &lt;-UA address, bank details, contact name -&gt;
+            </td>
+            <td class="doc-column">
+                <h4>Company that concluded the Contract with the abovementioned company  (“Service Provider”)</h4>
+                <strong></strong> Individual Entrepreneur Petrenko Petr Petrovich<br />
+                &lt;-EN address, bank details, contact name -&gt;
+            </td>
+        </tr>
+    </table>
+    <div class="page-break"></div>
+    <table>
+        <tr>
+            <td class="doc-column">
+                Покупець та постачальник послуг уклали Акт про те, що постачальник послуг в період
+                @Model.Invoice.Period.ToShortDatesForUa(), виконав роботу згідно контракту №@Model.Contract.Number від @Model.Contract.Date.ToLongDateForUa().
+                Згідно контракту робота була оцінена у вартість @Model.Invoice.Total.AsUSDForUa():
+            </td>
+            <td class="doc-column">
+                Buyer and Service Provider concluded the Act as for the fact that Service Provider fulfilled
+                the job under the Contract #@Model.Contract.Number від @Model.Contract.Date.ToLongDateForEn(). In period @Model.Invoice.Period.ToShortDatesForEn(),
+                As per the contract the job was estimated at @Model.Invoice.Total.AsUSDForEn():
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td class="doc-column">
+                <table class="sheet">
+                    <tr>
+                        <th>#</th>
+                        <th>Найменування</th>
+                        <th>Термiн</th>
+                        <th>Сума</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Cплата за представлені послуги з розроблення ПЗ.</td>
+                        <td>@Model.Invoice.Period.ToShortDatesForUa()</td>
+                        <td>@Model.Invoice.Total.AsUSDForUa()</td>
+                    </tr>
+                </table>
+            </td>
+            <td class="doc-column">
+                <table class="sheet">
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Term</th>
+                        <th>Amount</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Payment for the provided services in software development.</td>
+                        <td>@Model.Invoice.Period.ToShortDatesForEn()</td>
+                        <td>@Model.Invoice.Total.AsUSDForEn()</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td class="doc-column">Покупець претензій до якості виконаних робіт не має.</td>
+            <td class="doc-column">Buyer has no claims concerning the job fulfilled. </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td class="doc-column">
+                <h4>Сторони</h4>
+                <h5>Компанія</h5>
+
+                <strong>ТзОВ “Щасливий Клієнт”</strong><br />
+                &lt;- extra identification details -&gt;
+
+            </td>
+            <td class="doc-column">
+                <h4>Parts</h4>
+                <h5>The Company</h5>
+
+                <strong>Happy Company LTD</strong><br />
+                &lt;- extra identification details -&gt;
+
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td class="doc-column">
+                <h5>Постачальник послуг </h5>
+
+                <strong>ФОП Петренко Петро Петрович</strong><br />
+              &lt;- extra identification details -&gt;
+            </td>
+            <td class="doc-column">
+                <h5>Service Provider</h5>
+
+                <strong>Individual Entrepreneur Petrenko Petro Petrovich</strong><br />
+                &lt;- extra identification details -&gt;
+
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td class="doc-column">Ім'я: Петренко Петро Петрович</td>
+            <td class="doc-column">Name: Petrenko Petro Petrovich</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td class="doc-column">
+                <table>
+                    <tr>
+                        <td style="width: 1%">Підпис&nbsp(Signature):</td>
+                        <td style="border-bottom: 1px solid black">&nbsp;</td>
+                    </tr>
+                </table>
+            </td>
+            <td class="doc-column">
+                <table>
+                    <tr>
+                        <td style="width: 1%">Дата&nbsp(Date):</td>
+                        <td style="border-bottom: 1px solid black">&nbsp;</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td class="doc-column">
+                <strong>Прийняття акту про послуги зі сторони ТзОВ Щасливий Клієнт</strong><br />
+                Ім'я: Мр Джеймс Т. Кірк
+            </td>
+            <td class="doc-column">
+                <strong>Acceptance of the contract on providing services from Happy Company LTD</strong><br />
+                Name: Mr. James Tiberius Kirk
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td class="doc-column">
+                <table>
+                    <tr>
+                        <td style="width: 1%">Підпис&nbsp(Signature):</td>
+                        <td style="border-bottom: 1px solid black">&nbsp;</td>
+                    </tr>
+                </table>
+            </td>
+            <td class="doc-column">
+                <table>
+                    <tr>
+                        <td style="width: 1%">Дата&nbsp(Date):</td>
+                        <td style="border-bottom: 1px solid black">&nbsp;</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
